@@ -49,5 +49,9 @@ def list():
     return "OK"
 
 
-if __name__ == "__main__":
+def main():
     fire.Fire()
+
+
+if __name__ == "__main__":
+    main()
