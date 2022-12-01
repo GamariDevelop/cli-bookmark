@@ -5,6 +5,10 @@ import webbrowser
 import fire
 
 
+def main():
+    fire.Fire()
+
+
 def url(name):
     """指定のサイトに遷移する機能。"""
     urls_file = open("urls.json")
@@ -47,10 +51,6 @@ def list():
         target_url = url_map["url"]
         print(target_name, target_url)
     return "OK"
-
-
-def main():
-    fire.Fire()
 
 
 if __name__ == "__main__":
