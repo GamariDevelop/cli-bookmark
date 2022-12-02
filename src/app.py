@@ -1,8 +1,12 @@
 import re
 import json
 import webbrowser
+import os
 
 import fire
+
+
+file_path = os.path.dirname(__file__) + "\\urls.json"
 
 
 def main():
@@ -11,7 +15,7 @@ def main():
 
 def url(name):
     """指定のサイトに遷移する機能。"""
-    urls_file = open("urls.json")
+    urls_file = open(file_path)
     urls_dict = json.load(urls_file)
     for url_map in urls_dict:
         target_name = url_map["name"]
@@ -25,8 +29,13 @@ def url(name):
 
 def add(name, url):
     """URLの追加を行う。"""
-    with open("urls.json", "r") as urls_file:
+    if not os.path.exists(file_path):
+        with open(file_path, 'w') as f:
+            f.write("[]")
+    with open(file_path, "r") as urls_file:
+        print(urls_file)
         urls_dict = json.load(urls_file)
+        print(urls_dict)
         for url_map in urls_dict:
             if url_map["name"] == name:
                 return "サイト名が重複しています。別の名前で登録してください。"
@@ -34,9 +43,9 @@ def add(name, url):
         url_pattern = "https?://[\w/:%#\$&\?\(\)~\.=\+\-]+"
         if not re.match(url_pattern, url):
             return "URLの形式が間違っています。確認してください。"
-
+            ex
         # 追加処理
-        with open("urls.json", "w") as write_file:
+        with open(file_path, "w") as write_file:
             urls_dict.append({"name": name, "url": url})
             json.dump(urls_dict, write_file, indent=4)
     return "追加完了"
@@ -44,13 +53,20 @@ def add(name, url):
 
 def list():
     """URL一覧を確認する機能。"""
-    urls_file = open("urls.json")
-    urls_dict = json.load(urls_file)
-    for url_map in urls_dict:
-        target_name = url_map["name"]
-        target_url = url_map["url"]
-        print(target_name, target_url)
-    return "OK"
+    try:
+        with open(file_path) as urls_file:
+            urls_dict = json.load(urls_file)
+            for url_map in urls_dict:
+                target_name = url_map["name"]
+                target_url = url_map["url"]
+                print(target_name, target_url)
+    except FileNotFoundError:
+        return "addコマンドで、URLを追加してください。"
+
+
+def path():
+    print(__file__)
+    print(os.chdir(__file__))
 
 
 if __name__ == "__main__":
