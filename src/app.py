@@ -27,27 +27,34 @@ def url(name):
     return "指定されたサイトが存在しません。"
 
 
-def add(name, url):
+def add(name: str, url: str) -> str:
     """URLの追加を行う。"""
+    file_path = os.path.dirname(__file__) + "\\urls.json"
+
+    # ファイルが存在しない場合は新規作成
     if not os.path.exists(file_path):
         with open(file_path, 'w') as f:
             f.write("[]")
+
+    # 読み込み
     with open(file_path, "r") as urls_file:
-        print(urls_file)
         urls_dict = json.load(urls_file)
-        print(urls_dict)
+
+        # サイト名が重複している場合はエラー
         for url_map in urls_dict:
             if url_map["name"] == name:
                 return "サイト名が重複しています。別の名前で登録してください。"
+
         # URL形式の判定
         url_pattern = "https?://[\w/:%#\$&\?\(\)~\.=\+\-]+"
         if not re.match(url_pattern, url):
             return "URLの形式が間違っています。確認してください。"
-            ex
+
         # 追加処理
         with open(file_path, "w") as write_file:
             urls_dict.append({"name": name, "url": url})
             json.dump(urls_dict, write_file, indent=4)
+
     return "追加完了"
 
 
