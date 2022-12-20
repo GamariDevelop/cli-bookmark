@@ -9,7 +9,7 @@ Cli形式でブックマークを管理するツール。
 3. 以下のコマンドを実行する
 
 ```cli
-python setup.py install
+install
 ```
 
 4. コマンドプロンプト上で「bookmark url youtube」を打ち込み、Youtubeが開いたらインストール完了。
@@ -23,6 +23,3 @@ python setup.py install
   - nameにurlを紐づけ、urlコマンドで呼び出せるようになる。
 - bookmark url <name>
   - nameに紐付けられたurlのサイトを呼び出す。
-
-## 使用例
-
